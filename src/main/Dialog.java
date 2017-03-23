@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -17,24 +18,24 @@ import javax.swing.JOptionPane;
 
 public class Dialog {
 	
-
-	public void Clipboard(String select) { // 構文コピーメソッド
+	public static void Clipboard(String select) { // 構文コピーメソッド
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(select);
 		clipboard.setContents(selection, selection);
 	}
-	public void BrowserOpen(String URL) {
+	public static void BrowserOpen(String URL) {
 		Desktop desktop = Desktop.getDesktop();
 		try {
 			URI uri = new URI(URL);
 			desktop.browse(uri);
-		}
-		catch (IOException String) {
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
-		}
+	}
 	
-	public void Question(String Message, String Title, String correct) {
+	public static void Question(String Message, String Title, String correct) {
 		JFrame frame = new JFrame();
 		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 		if (answer == JOptionPane.YES_OPTION){
@@ -44,9 +45,9 @@ public class Dialog {
 			correct = "no";
 		}
 	}
-	public void TxtfileWrite(String writtentext, String correct) {
+	public static void TxtfileWrite(Component parent, String writtentext, String correct) {
 		JFileChooser filechooser = new JFileChooser();
-		int selected = filechooser.showOpenDialog(this);
+		int selected = filechooser.showOpenDialog(parent);
 		if (selected == JFileChooser.APPROVE_OPTION){
 				File file = filechooser.getSelectedFile();
 					try{
@@ -57,29 +58,29 @@ public class Dialog {
 									FileWriter filewriter = new FileWriter(file);
 									filewriter.write(writtentext);
 									filewriter.close();
-									Dialog("書き込みが完了しました"); 
+									showDialog("書き込みが完了しました"); 
 								}else{
-									Dialog("書き込みを中止しました");
+									showDialog("書き込みを中止しました");
 								}
 						}else{
 							file.createNewFile();
 							FileWriter filewriter = new FileWriter(file);
 							filewriter.write(writtentext);
 							filewriter.close();
-							Dialog("書き込みが完了しました"); 
+							showDialog("書き込みが完了しました"); 
 						}
 						}catch(IOException e){
-						Dialog("エラー:" + e);
+						showDialog("エラー:" + e);
 					}
 					
 			}else if (selected == JFileChooser.CANCEL_OPTION){
-				Dialog("キャンセルされました");
+				showDialog("キャンセルされました");
 			}else if (selected == JFileChooser.ERROR_OPTION){
-				Dialog("エラー又は取消しがありました");
+				showDialog("エラー又は取消しがありました");
 			}
 	}
-	public Dialog(String text) {
+	public static void showDialog(String text) {
 		JLabel frame = new JLabel("frame");
 		JOptionPane.showMessageDialog(frame, text);
 	}
-	}
+}

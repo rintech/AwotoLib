@@ -12,13 +12,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class AwotoLib {
-	String correct = new String();
 	public void Dialog(String text) {
-		
 		JOptionPane.showMessageDialog(this, text);
 	}
-	public void question(String Message, String Title) {
+	
+	public void Question(String Message, String Title) {
 		JFrame frame = new JFrame();
 		int answer = JOptionPane.showConfirmDialog(frame, Title, Message, JOptionPane.OK_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
 		if (answer == JOptionPane.YES_OPTION){
@@ -61,6 +59,8 @@ public class AwotoLib {
 			}else if (selected == JFileChooser.ERROR_OPTION){
 				Dialog("エラー又は取消しがありました");
 			}
+	}
+	}
 	//public static void main(String[] args) {
 /*		try {
 			File file = new File("test.zip");
@@ -108,4 +108,3 @@ public class AwotoLib {
 	}*/
 	//}
 	
-}
